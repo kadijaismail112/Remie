@@ -55,6 +55,7 @@ a:focus {
     display: flex;
     width: 100%;
     align-items: stretch;
+    position: absolute;
 }
 
 #sidebar {
@@ -70,7 +71,7 @@ a:focus {
 }
 
 #sidebar .sidebar-header {
-    display: flex ;
+    display: flex;
     margin-top: 22px;
     justify-content: center;
     background: var(--blue_two);
@@ -94,14 +95,15 @@ a:focus {
 
 #sidebar ul li a:hover {
     color: var(--secondary_shade) !important;
-    background: var(--blue_two);;
+    background: var(--blue_two);
+    ;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: var(--blue_two) !important;
     background: var(--secondary_shade);
-    
+
 }
 
 a[data-toggle="collapse"] {
@@ -159,6 +161,13 @@ a.article:hover {
 .remie_logo {
     width: 218px;
     height: 82px;
+}
+
+.dashboard {
+    position: absolute;
+    margin-left: 260px;
+    margin-top: 89px;
+    height: max-content;
 }
 
 /* ---------------------------------------------------
