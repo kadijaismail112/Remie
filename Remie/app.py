@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/sidebar')
 def sidebar():
-    return render_template('sidebar.html',title='sidebar')
+    return render_template('index.html',title='sidebar')
 
 # @app.route('/index')
 # def index():
@@ -19,3 +19,5 @@ def sidebar():
 # @app.route('/register')
 # def index():
 #     return render_template('register.html',title='register')
+if __name__ == '__main__':
+    app.run(debug=True)
