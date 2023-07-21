@@ -3,6 +3,7 @@
 */
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
@@ -19,7 +20,7 @@ p {
 a,
 a:hover,
 a:focus {
-    color: inherit;
+    color: #fff !important;
     text-decoration: none;
     transition: all 0.3s;
 }
@@ -59,7 +60,7 @@ a:focus {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
+    background: var(--blue_two);
     color: #fff;
     transition: all 0.3s;
 }
@@ -69,8 +70,10 @@ a:focus {
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
-    background: #6d7fcc;
+    display: flex ;
+    margin-top: 22px;
+    justify-content: center;
+    background: var(--blue_two);
 }
 
 #sidebar ul.components {
@@ -90,14 +93,15 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+    color: var(--secondary_shade) !important;
+    background: var(--blue_two);;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
+    color: var(--blue_two) !important;
+    background: var(--secondary_shade);
+    
 }
 
 a[data-toggle="collapse"] {
@@ -152,6 +156,11 @@ a.article:hover {
     transition: all 0.3s;
 }
 
+.remie_logo {
+    width: 218px;
+    height: 82px;
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
@@ -160,9 +169,11 @@ a.article:hover {
     #sidebar {
         margin-left: -250px;
     }
+
     #sidebar.active {
         margin-left: 0;
     }
+
     #sidebarCollapse span {
         display: none;
     }
