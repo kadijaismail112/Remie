@@ -1,24 +1,28 @@
-.dash_container{
-    display:flex;
+.dash_container {
+    display: flex;
     flex-direction: row;
     position: relative;
-    column-gap: 332px;
-    margin-left: 386px;
-    
+    column-gap: 132px;
+    margin-left: 101px;
+
 }
-.dash_col_one{
-    display:flex;
+
+.dash_col_one {
+    display: flex;
     flex-direction: column;
+    align-items: center;
 }
-.dash_col_two{
-    display:flex;
-    flex-direction: column;
-}
-.intro_dash{
+
+
+
+.intro_dash {
     color: var(--blue_one);
-font-family: Myanmar Khyay;
-font-size: 32px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+    font-family: 'myanmar-khyay-regular', sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+    margin-bottom: 0;
 }
+
