@@ -1,8 +1,8 @@
 
 
-function sideClick(){
+function sideClick() {
   $(document).ready(function () {
-     $('#sidebar').toggleClass('active');
+    $('#sidebar').toggleClass('active');
   });
 }
 
@@ -23,4 +23,10 @@ function openPopup() {
     // Reset the window size to the original fixed size
     popupWindow.resizeTo(593, 711);
   });
+}
+function goToLogin() {
+    window.location.href = '/login'; // Replace '/another-page' with the URL of the target page
+}
+function goToRegister() {
+  window.location.href = '/register'; // Replace '/another-page' with the URL of the target page
 }
