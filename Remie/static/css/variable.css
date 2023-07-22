@@ -1,6 +1,16 @@
-:root{
+:root {
     --blue_one: #153243;
     --blue_two: #153243;
-    --secondary_shade:#EEF0EB;
+    --secondary_shade: #EEF0EB;
 
+}
+
+@font-face {
+    font-family: 'myanmar-khyay-regular', sans-serif;
+    src: url('../fonts/Khay\-Regular.ttf');
+    /*URL to font*/
+}
+
+body {
+    overflow-x: hidden;
 }
