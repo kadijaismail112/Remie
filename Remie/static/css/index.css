@@ -82,7 +82,7 @@
 
 }
 .bot_input ::placeholder{
-    color:var(--blue_one)
+    color:var(--blue_one);
 }
 
 
