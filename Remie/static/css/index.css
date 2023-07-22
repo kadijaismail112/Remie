@@ -1,9 +1,8 @@
 .dash_container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     position: relative;
     column-gap: 132px;
-    margin-left: 101px;
 
 }
 
@@ -11,6 +10,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 194px;
 }
 
 
@@ -26,3 +26,74 @@
     margin-bottom: 0;
 }
 
+.bot {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bot_img {
+    width: 203px;
+    height: 179px;
+}
+
+.bot_mouth {
+    position: absolute;
+    background-color: var(--blue_one);
+    width: 136.004px;
+    height: 8px;
+    margin-top: 35px;
+    animation-name: mouthtalk;
+    animation-duration: 0.85s;
+    animation-delay: 0s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+    animation-iteration-count: 10;
+}
+
+.bot_intro {
+    color: #153243;
+    text-align: center;
+    font-family: 'myanmar-khyay-regular', sans-serif;
+    font-size: 21.908px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 53px;
+}
+
+.bot_input {
+    display: flex;
+    width: 336px;
+    height: 42.331px;
+    border-radius: 17.197px;
+    border: 1.323px solid var(--blue_one);
+    background: #FFF;
+    align-items: center;
+    margin-top: 108px;
+}
+.bot_input input{
+    border: none;
+    outline: none;
+    margin-left: 25px;
+
+}
+.bot_input ::placeholder{
+    color:var(--blue_one)
+}
+
+
+@keyframes mouthtalk {
+    0% {}
+
+    50% {
+        transform: translate(0, 23px);
+    }
+
+    100% {
+        transform: translate(0, -1px);
+    }
+}
