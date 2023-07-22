@@ -4,7 +4,11 @@
 
 Welcome to **Remie!**  
 
-To use our site you must have python and **venv** setup and download Flask and its modules from app.py. 
+To use our site you must have **Python**, **Venv**, and **Flask** installed/set. You must also download all the modules used in this project as well.
+
+Once everything is set, in the terminal cd into Remie then run te command:
+
+**python3 app.py**
 
 Remie TBD...
 
