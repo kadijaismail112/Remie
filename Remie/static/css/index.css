@@ -39,13 +39,20 @@
     height: 179px;
 }
 
+.listening_button {
+    all: unset;
+
+}
+.listening_button:focus{
+    outline: none;
+}
 .bot_mouth {
     position: absolute;
     background-color: var(--blue_one);
     width: 136.004px;
     height: 8px;
     margin-top: 35px;
-    animation-name: mouthtalk;
+    animation-name: none;
     animation-duration: 0.85s;
     animation-delay: 0s;
     animation-timing-function: ease-in-out;
@@ -75,17 +82,102 @@
     align-items: center;
     margin-top: 108px;
 }
-.bot_input input{
+
+.bot_input input {
     border: none;
     outline: none;
     margin-left: 25px;
 
 }
-.bot_input ::placeholder{
-    color:var(--blue_one);
+
+.bot_input ::placeholder {
+    color: var(--blue_one);
 }
 
+.playing {
+    position: absolute;
+    margin-top: -300px;
+    margin-left: 300px;
+    width: 200px;
+    transform: translateX(-50%) translateY(-50%);
+  }
+  .playing:after {
+    content: "Click me!";
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 20px;
+  }
+  .now.playing .bar {
+    display: inline-block;
+    position: relative;
+    margin-right: 1px;
+    width: 10px;
+    height: 1px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, var(--grey) ,var(--blue_one));
+    color: transparent;
+    animation-iteration-count: 1;
+  }
+  .paused.playing .bar {
 
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+  }
+  .paused.playing:after {
+    content: "Listening"
+  }
+  .n1 {
+    animation-delay: 0.5s;
+  }
+  .n2 {
+    animation-delay: 0.2s;
+  }
+  .n3 {
+    animation-delay: 1.2s;
+  }
+  .n4 {
+    animation-delay: 0.9s;
+  }
+  .n5 {
+    animation-delay: 2.3s;
+  }
+  .n6 {
+    animation-delay: 1.3s;
+  }
+  .n7 {
+    animation-delay: 3.1s;
+  }
+  .n8 {
+    animation-delay: 1.9s;
+  }
+  @keyframes pulse {
+    0% {
+      height: 1px;
+      margin-top: 0;
+    }
+    10% {
+      height: 40px;
+      margin-top: -40px;
+    }
+    50% {
+      height: 20px;
+      margin-top: -20px;
+    }
+    60% {
+      height: 30px;
+      margin-top: -30px;
+    }
+    80% {
+      height: 60px;
+      margin-top: -60px;
+    }
+    100% {
+      height: 1px;
+      margin-top: 0;
+    }
+  }
 @keyframes mouthtalk {
     0% {}
 
