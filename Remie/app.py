@@ -1,4 +1,8 @@
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+
+# chat history database
+db = SQLAlchemy()
 
 app = Flask(__name__)
 
@@ -10,6 +14,9 @@ def login():
 @app.route('/register')
 def register():
     return render_template('register.html',title='register')
+@app.route('/logout')
+def logout():
+    return 'Logout'
 @app.route('/basepopup')
 def basepopup():
     return render_template('basepopup.html',title='sidebar')
