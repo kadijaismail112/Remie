@@ -13,7 +13,7 @@ def register():
 @app.route('/basepopup')
 def basepopup():
     return render_template('basepopup.html',title='sidebar')
-@app.route('/index')
+@app.route('/dashboard')
 def index():
     return render_template('index.html',title='index')
 if __name__ == '__main__':
