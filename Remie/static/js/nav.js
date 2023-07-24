@@ -10,7 +10,7 @@ let popupWindow;
 
 function openPopup() {
   // Specify the URL of your website
-  const url = '/index'; // Replace '/index' with the actual URL of your website
+  const url = '/dashboard'; // Replace '/index' with the actual URL of your website
 
   // Specify the features of the popup window (width and height set directly)
   const windowFeatures = 'width=593,height=711,resizable=no,scrollbars=no,status=no,toolbar=no';
