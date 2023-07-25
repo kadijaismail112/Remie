@@ -47,7 +47,7 @@ def dash():
 def convo():
     return render_template('convo.html',title='convo')
 
-API_KEY = "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"
+API_KEY = "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"
 openai.api_key = API_KEY
 
 @app.route("/api", methods=["POST"])
@@ -78,4 +78,4 @@ def chatgpt_process_query(message):
 
     return clean_assistant_response 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=8000)
