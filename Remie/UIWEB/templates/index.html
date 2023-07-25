@@ -55,19 +55,19 @@
             arr = []
             //button.textContent = "Start listening";
             //var player = document.getElementById("music");
-            player.classList.toggle("paused");
-            $(document).ready(function () {
-                $('.bot_mouth').css('animation-name', 'mouthtalk');
-             });
+            //player.classList.toggle("paused");
+           // $(document).ready(function () {
+             //   $('.bot_mouth').css('animation-name', 'mouthtalk');
+             //});
           };
 
           const start = () => {
            // main.classList.add("speaking");
             recognition.start();
             //button.textContent = "Stop listening";
-            $(document).ready(function () {
-                $('.bot_mouth').css('animation-name', 'none');
-             });
+            //$(document).ready(function () {
+                //$('.bot_mouth').css('animation-name', 'none');
+            // });
           };
 
           const onResult = event => {
