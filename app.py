@@ -1,30 +1,32 @@
+import openai
 from flask import Flask, render_template, jsonify, request
 from model import chatgpt_process_query, classifier, chat_log
 
 app = Flask(__name__)
 
-#routes
-@app.route('template/')
+openai.api_key = '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'
 
-@app.route('template/login')
+#routes
+@app.route('/')
+
+@app.route('/login')
 def login():
-    return render_template('login.html',title='sidebar')
+    return render_template('/login.html',title='sidebar')
 
 @app.route('/register')
 def register():
-    return render_template('register.html',title='register')
+    return render_template('/register.html',title='register')
 
 @app.route('/basepopup')
 def basepopup():
-    return render_template('basepopup.html',title='sidebar')
-
+    return render_template('/basepopup.html',title='sidebar')
 @app.route('/dashboard')
 def dash():
-    return render_template('index.html',title='dashboard')
+    return render_template('/index.html',title='dashboard')
 
 @app.route('/convos')
 def convo():
-    return render_template('convo.html',title='convo')
+    return render_template('/convo.html',title='convo')
 
 def api():
     # Get the message from the request
