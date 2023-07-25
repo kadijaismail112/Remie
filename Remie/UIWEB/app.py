@@ -21,12 +21,8 @@ def dash():
 def convo():
     return render_template('convo.html',title='convo')
 
-API_KEY = ""
+API_KEY = "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"
 openai.api_key = API_KEY
-
-@app.route("/")
-def index():
-    return render_template("index.html")
 
 @app.route("/api", methods=["POST"])
 def api():
@@ -34,7 +30,7 @@ def api():
     # print("backend grab form per: ", request.form.get('username'), request.form.get('password'))
 
     text_message = request.form.get('text_message')
-
+    print("response:" + text_message)
     response_message=chatgpt_process_query(text_message)
 
     return jsonify(response_message)
