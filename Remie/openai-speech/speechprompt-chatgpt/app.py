@@ -3,7 +3,7 @@ from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 
-API_KEY = "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"
+API_KEY = "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"
 openai.api_key = API_KEY
 
 @app.route("/")
