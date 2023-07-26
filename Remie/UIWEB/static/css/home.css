@@ -19,11 +19,15 @@ body {
     margin-bottom: 20px;
     opacity: 0;
     color: var(--blue_one);
-    cursor: pointer; /* Add a pointer cursor to indicate interactivity */
   }
   
   .fade-in {
     animation: fadeIn 1s forwards;
+  }
+  
+  .slide-left {
+    opacity: 0;
+    animation: slideLeft 1s forwards;
   }
   
   @keyframes fadeIn {
@@ -32,20 +36,17 @@ body {
     }
   }
   
-  .welc_container p {
-    opacity: 0;
-    animation: slideLeft 1s forwards;
-    cursor: default; /* Disable pointer cursor for the description text */
-  }
-  
   @keyframes slideLeft {
     to {
       opacity: 1;
       transform: translateX(0);
     }
   }
-  
-  .bounce button {
+  a {
+    all: unset;
+}
+
+  .bounce button{
     display: inline-block;
     padding: 12px 20px;
     margin-top: 30px;
@@ -53,20 +54,18 @@ body {
     color: #fff;
     text-decoration: none;
     border-radius: 4px;
-    opacity: 0;
+    opacity: 1;
     animation: bounce 1s 1s forwards;
-    cursor: pointer; /* Add a pointer cursor to indicate interactivity */
-  }
   
-  .bounce button:focus {
+
+  }
+  .bounce button:focus{
     outline: none;
   }
-  
-  .bounce button:hover {
+  .bounce button:hover{
     background-color: #f0f0f0;
-    color: var(--blue_one);
+    color:var(--blue_one);
     border: 2px solid var(--blue_one) !important;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   }
   
   @keyframes bounce {
@@ -75,12 +74,6 @@ body {
     }
     50% {
       transform: translateY(-20px);
-    }
-  }
-  
-  @keyframes backgroundAnimation {
-    to {
-      background-position: right bottom;
     }
   }
   
