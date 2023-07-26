@@ -53,12 +53,12 @@
     height: 8px;
     margin-top: 35px;
     animation-name: none;
-    animation-duration: 0.85s;
-    animation-delay: 4s;
+    animation-duration: 1s;
+    animation-delay: 2s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
     animation-direction: alternate;
-    animation-iteration-count: 10;
+    animation-iteration-count: infinite;
 }
 
 .bot_intro {
@@ -188,4 +188,13 @@
     100% {
         transform: translate(0, -1px);
     }
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+  }
 }
