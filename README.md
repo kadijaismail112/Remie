@@ -1,6 +1,6 @@
 # SEO-Project-Remie
 ## Project Instructions
-![Logo](Remie/static/images/remielogo.png)
+![Logo](Remie/UIWEB/static/images/remielogo.png)
 
 Welcome to **Remie!**  
 
