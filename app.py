@@ -21,7 +21,7 @@ def dash():
 def convo():
     return render_template('convo.html',title='convo')
 
-API_KEY = "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"
+API_KEY = "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"
 openai.api_key = API_KEY
 
 @app.route("/api", methods=["POST"])
