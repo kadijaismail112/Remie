@@ -5,16 +5,17 @@
 {% block content %}
   <div class="reg_container">
     <img src="{{url_for('static',filename='images/arm.png')}}" alt="arm" class="reg_img_one">
-    <div class="reg_box">
+    <form class="reg_box" method="POST" action="">
+      {{ form.hidden_tag() }}
         <p class="reg_top">Register</p>
-        <input id='inputs' class="reg_input" type="text" name = "name_input" placeholder="Enter Name"/>
-        <input id='inputs' class="reg_input" type="email" name = "email_input" placeholder="Enter Email"/>
-        <input id='inputs' class="reg_input" type = "password" name = "password_input" placeholder="Enter Password"/>
-        <input id='inputs' class="reg_input" type = "password" name = "conf_password_input" placeholder="Confirm Password"/>
-        <button id='inputs' class="register_btn" onclick="goToLogin()">Register</button>
+        {{ form.name( id='inputs', class="reg_input", type = "name", placeholder="Enter Name")}} 
+        {{ form.email( id='inputs',class="reg_input", type = "email", placeholder="Enter Email")}} 
+        {{ form.password( id='inputs',class="reg_input", type = "password", placeholder="Enter Password" )}} 
+        {{ form.confirmPassword( id='inputs',class="reg_input", type = "password", placeholder="Confirm Password")}} 
+        {{ form.submit(id='inputs', class="register_btn", onclick="goToLogin()") }}
         <button id='inputs' class="login_btn" onclick="goToLogin()">login</button>
 
-    </div>
+    </form>
     <img src="{{url_for('static',filename='images/search.png')}}" alt="search" class="reg_img_two">
   </div>
 {% endblock %}
