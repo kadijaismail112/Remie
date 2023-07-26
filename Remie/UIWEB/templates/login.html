@@ -13,7 +13,7 @@
     <p class="log_top">Login</p>
     {{ form.email(class="log_input", placeholder="Enter Email")}} {{
     form.password(class="log_input", placeholder="Enter Password" )}} {{
-    form.submit(class="login_btn", onclick="openPopup()") }}
+    form.submit(class="login_btn") }}
     <a href="{{ url_for('register') }}"
     ><button class="register_btn" onclick="goToRegister()">Register</button></a
   >
@@ -26,4 +26,35 @@
     class="log_img_two"
   />
 </div>
+{% endblock %}
+{% block popjsScripts %}
+<script>
+  //let iisLogged = '{{iisLogged}}';
+  function checkopenPopup() {
+    let isLogged = {{ 'true' if session.get('isLogged') else 'false' }};
+    if (isLogged) {
+      alert("open");
+      openPopup();
+    } else {
+      alert("NO");
+    }
+  }
+  let popupWindow;
+  function openPopup() {
+    // Specify the URL of your website
+    const url = '{{ url_for('dashboard') }}'; // Replace '/index' with the actual URL of your website
+  
+    // Specify the features of the popup window (width and height set directly)
+    const windowFeatures = 'width=593,height=711,resizable=no,scrollbars=no,status=no,toolbar=no';
+  
+    // Open the popup window
+    popupWindow = window.open(url, '_blank', windowFeatures);
+  
+    // Add an event listener for the 'resize' event on the opened window
+    popupWindow.addEventListener('resize', () => {
+      // Reset the window size to the original fixed size
+      popupWindow.resizeTo(593, 711);
+    });
+  }
+</script>
 {% endblock %}

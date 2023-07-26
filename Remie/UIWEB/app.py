@@ -1,6 +1,6 @@
 import os
 import openai
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for,session,flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -66,22 +66,48 @@ with app.app_context():
     db.create_all()
 
 # routes
-
-
 @app.route('/')
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/home')
+def home():
+    return render_template('home.html', title='Home')
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     form = LoginForm()
+
+#     if form.validate_on_submit():
+#         user = User.query.filter_by(email=form.email.data).first()
+#         if user and bcrypt.check_password_hash(user.password, form.password.data):
+#             login_user(user)
+#             session['isLogged'] = True
+#             return redirect(url_for('home'))
+
+#     # If the form is not submitted or login is unsuccessful, set isLogged to False
+#     session['isLogged'] = False
+#     return render_template('login.html', title='Login', form=form)
+@app.route('/Launch')
+def launch():
+    return render_template('launchRemie.html', title='Home')
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                return redirect(url_for('login'))
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)
+
+            # Set isLogged to True in the session after successful login
+            session['isLogged'] = True
+
+            return redirect(url_for('launch'))
+
+        flash('Incorrect Email or Password. Please try again!', 'error')
+
+    # If the form is not submitted or login is unsuccessful, set isLogged to False
+    session['isLogged'] = False
 
     return render_template('login.html', title='Login', form=form)
-
-
 @app.route('/register', methods=["GET", "POST"])
 def register():
     form = RegisterForm()
@@ -97,14 +123,14 @@ def register():
     return render_template('register.html', title='register', form=form)
 
 
-@app.route('/basepopup')
-def basepopup():
-    return render_template('basepopup.html', title='sidebar')
+# @app.route('/basepopup')
+# def basepopup():
+#     return render_template('basepopup.html', title='sidebar')
 
 
 @app.route('/dashboard')
 @login_required
-def dash():
+def dashboard():
     return render_template('index.html', title='dashboard')
 
 
