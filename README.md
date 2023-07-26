@@ -14,3 +14,18 @@ Remie TBD...
 
 The API USED Is: [TBD](https://api-ninjas.com/)  
 
+Required:
+
+Python3 installed
+
+install pip:
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3 get-pip.py
+
+pip3 install openai
+pip3 install Flask
+pip3 install Flask-SQLAlchemy==2.51
+pip3 install SQLAlchemy==1.4.35
+pip3 install flask_login
+pip3 install flask_wtf
+pip3 install flask_bcrypt
