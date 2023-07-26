@@ -114,7 +114,7 @@ def convo():
     return render_template('convo.html', title='convo')
 
 
-API_KEY = os.environ.get("OPEN_AI_API_KEY")
+API_KEY = "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"
 openai.api_key = API_KEY
 
 
