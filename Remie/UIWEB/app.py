@@ -85,6 +85,7 @@ def home():
 #     session['isLogged'] = False
 #     return render_template('login.html', title='Login', form=form)
 @app.route('/Launch')
+@login_required
 def launch():
     return render_template('launchRemie.html', title='Home')
 
