@@ -1,12 +1,19 @@
-{% extends 'base.html' %}
-{% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/launch.css') }}" />
-{% endblock %}
-{% block content %}
-<h1>Greetings, Welcome to REMIE</h1>
-<a href="{{ url_for('login') }}">
-    <button class="welcome_btn">Register</button>
-</a>
-{% endblock %}
-{% block popjsScripts %}
-{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REMIE</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/home.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/variable.css') }}" /></head>
+<body>
+  <div class="welc_container">
+    <h1 class="fade-in">Welcome to REMIE!</h1>
+    <p class="slide-left">Discover Amazing Things</p>
+    <a class='bounce' href="{{ url_for('login') }}">
+        <button class="welcome_btn">Get Started</button>
+    </a>
+  </div>
+</body>
+</html>

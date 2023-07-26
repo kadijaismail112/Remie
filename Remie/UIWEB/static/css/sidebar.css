@@ -2,7 +2,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 p {
     font-family: 'Poppins', sans-serif;
@@ -62,14 +62,20 @@ width:260px;
 }
 
 
-
-#sidebar .sidebar-header {
+.sidebar-header {
     display: flex;
     margin-top: 22px;
     justify-content: center;
     background: var(--blue_two);
+    width:200px;
 }
 
+.sidebar-header img {
+    width: 90%;
+ 
+    /* margin-left: auto;
+    margin-right:auto ; */
+}
 #sidebar ul.components {
     padding: 20px 0;
     border-bottom: 1px solid #47748b;
@@ -143,12 +149,8 @@ a.article:hover {
     transition: all 0.3s;
 }
 
-.remie_logo {
-    width: 114px;
-    height: 46.642px;
-}
 
-.dashboard {
+.contain {
     /* position: absolute; */
     height: max-content;
     width:100%;

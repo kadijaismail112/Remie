@@ -1,28 +1,37 @@
-{% extends 'base.html' %}
-{% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/launch.css') }}" />
-{% endblock %}
-{% block content %}
-<h1>Launch REMIE</h1>
-<button class="launch_btn" onclick="openPopup()">Launch REMIE</button>
-{% endblock %}
-{% block popjsScripts %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REMIE</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/variable.css') }}" />
+</head>
+<body>
+  <div class="welc_container">
+    <h1 class="fade-in">Launch REMIE!</h1>
+    <p class="slide-left">Discover Amazing Things</p>
+    <div class="bounce">
+    <button class='bounce'onclick="openPopup()">Launch REMIE</button>
+  </div>
+  </div>
+</body>
 <script>
-    function openPopup() {
-        // Specify the URL of your website
-        const url = '{{ url_for('dashboard') }}'; // Replace '/index' with the actual URL of your website
-      
-        // Specify the features of the popup window (width and height set directly)
-        const windowFeatures = 'width=593,height=711,resizable=no,scrollbars=no,status=no,toolbar=no';
-      
-        // Open the popup window
-        popupWindow = window.open(url, '_blank', windowFeatures);
-      
-        // Add an event listener for the 'resize' event on the opened window
-        popupWindow.addEventListener('resize', () => {
-          // Reset the window size to the original fixed size
-          popupWindow.resizeTo(593, 711);
-        });
-      }
+  function openPopup() {
+      // Specify the URL of your website
+      const url = '{{ url_for('dashboard') }}'; // Replace '/index' with the actual URL of your website
+    
+      // Specify the features of the popup window (width and height set directly)
+      const windowFeatures = 'width=593,height=711,resizable=no,scrollbars=no,status=no,toolbar=no';
+    
+      // Open the popup window
+      popupWindow = window.open(url, '_blank', windowFeatures);
+    
+      // Add an event listener for the 'resize' event on the opened window
+      popupWindow.addEventListener('resize', () => {
+        // Reset the window size to the original fixed size
+        popupWindow.resizeTo(593, 711);
+      });
+    }
 </script>
-{% endblock %}
+</html>
