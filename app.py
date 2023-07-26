@@ -30,7 +30,7 @@ def api():
     # Get the message from the request
     text_message = request.form.get('text_message')
     message_response = chatgpt_process_query(classifier, text_message)
-    print(type(message_response))
+    # print(type(message_response))
     if message_response == "1":
         chat_response = chatgpt_process_query(chat_log, text_message)
         return jsonify(chat_response)
