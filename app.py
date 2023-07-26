@@ -52,4 +52,4 @@ def chatgpt_process_query(message):
 
     return clean_assistant_response 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=8000)
