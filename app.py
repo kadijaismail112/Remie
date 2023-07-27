@@ -106,6 +106,7 @@ def login():
             session['isLogged'] = True
             session['email'] = form.email.data
             return redirect(url_for('launch'))
+        
         flash('Incorrect Email or Password. Please try again!', 'error')
     session['isLogged'] = False
     return render_template('login.html', title='Login', form=form)
@@ -168,6 +169,9 @@ def api():
         if message_response == "1":
             chat_response = agent(text_message)
             print(chat_response)
+            convo = Convos(email=session['email'], request=text_message, response=chat_response)
+            convo_db.session.add(convo)
+            convo_db.session.commit()
             convo = Convos(email=session['email'], request=text_message, response=chat_response)
             convo_db.session.add(convo)
             convo_db.session.commit()
