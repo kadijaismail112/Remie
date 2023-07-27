@@ -8,6 +8,10 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 
+from modules.gpt import chatgpt_process_query, classifier, agent
+from modules.pyd import create_json
+from modules.inout import input_json
+
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -150,17 +154,36 @@ openai.api_key = API_KEY
 
 @app.route("/api", methods=["POST"])
 def api():
-    # print("backend grab form", request.form)
-    # print("backend grab form per: ", request.form.get('username'), request.form.get('password'))
-
+    # Get the message from the request
     text_message = request.form.get('text_message')
-    print("response:" + text_message)
-    response_message = chatgpt_process_query(text_message)
+    message_response = chatgpt_process_query(classifier, text_message)
+    # Edge case: if no user response
+    if text_message == "":
+        return jsonify("I couldn't quite hear that, please try again.")
+    else:
+        # classify the message
+        if message_response == "1":
+            chat_response = agent(text_message)
+            print(chat_response)
+            return jsonify(chat_response)
+        elif message_response == "2":
+            event_json = create_json(text_message)
+            print(event_json)
+            new_json = input_json('parse.json')
+            print(new_json)
+            return jsonify("Event created successfully!")
+            # cond = create_event(new_json)
+            # print(cond)
+            # if cond == 0:
+            #     return jsonify("Event created successfully!")
+            # else:
+            #     return jsonify("I'm sorry, it didn't work. Please give me more information")        
+        else:
+            print("3")
+            return jsonify("I'm sorry, I don't understand. Please try again.")
 
-    return jsonify(response_message)
 
-
-chat_log = []
+# chat_log = []
 
 # class Convos(convo_db.Model):
 #     id = convo_db.Column(convo_db.Integer, primary_key=True)
@@ -168,35 +191,35 @@ chat_log = []
 #     response = convo_db.Column(convo_db.String(320), nullable=False)
 
 
-def chatgpt_process_query(message):
-    chat_history = []
-    chat_log.append({"role": "user", "content": message})
+# def chatgpt_process_query(message):
+#     chat_history = []
+#     chat_log.append({"role": "user", "content": message})
     
-    convo_query = Convos.query.filter(Convos.email == session['email']).all()
-    for convo in convo_query:
-        convo_dict = convo.__dict__
-        chat_history.append({"role": "user", "content": convo_dict['request']})
-        chat_history.append(
-            {"role": "assistant", "content": convo_dict['response']})
+#     convo_query = Convos.query.filter(Convos.email == session['email']).all()
+#     for convo in convo_query:
+#         convo_dict = convo.__dict__
+#         chat_history.append({"role": "user", "content": convo_dict['request']})
+#         chat_history.append(
+#             {"role": "assistant", "content": convo_dict['response']})
     
-    chat_history.append({"role": "user", "content": message})
+#     chat_history.append({"role": "user", "content": message})
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=chat_history
-    )
-    assistant_response = response['choices'][0]['message']['content']
+#     response = openai.ChatCompletion.create(
+#         model="gpt-3.5-turbo",
+#         messages=chat_history
+#     )
+#     assistant_response = response['choices'][0]['message']['content']
 
-    clean_assistant_response = assistant_response.strip("\n").strip()
-    print("ChatGPT:", clean_assistant_response)
-    chat_log.append({"role": "assistant", "content": clean_assistant_response})
+#     clean_assistant_response = assistant_response.strip("\n").strip()
+#     print("ChatGPT:", clean_assistant_response)
+#     chat_log.append({"role": "assistant", "content": clean_assistant_response})
 
-    convo = Convos(email=session['email'], request=message,
-                   response=clean_assistant_response)
-    convo_db.session.add(convo)
-    convo_db.session.commit()
+#     convo = Convos(email=session['email'], request=message,
+#                    response=clean_assistant_response)
+#     convo_db.session.add(convo)
+#     convo_db.session.commit()
 
-    return clean_assistant_response
+#     return clean_assistant_response
 
 
 if __name__ == '__main__':

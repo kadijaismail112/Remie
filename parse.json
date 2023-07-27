@@ -1,0 +1,1 @@
+{"summary": "Calendar Event", "location": "", "description": "Calendar Event", "start": {"dateTime": "2020-09-17T15:00:00-07:00", "timeZone": "America/Los_Angeles"}, "end": {"dateTime": "2020-09-17T16:00:00-07:00", "timeZone": "America/Los_Angeles"}, "recurrence": [], "attendees": [], "reminders": {"useDefault": true}}
