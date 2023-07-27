@@ -28,10 +28,10 @@
 }
 .regbutdiv{
     position: absolute;
-    margin-left: 335px;
+    margin-left: 338px;
     margin-top: 460px;
     transform-origin: left center;
-    transform: scale(0.9);
+
     font-family: 'myanmar-khyay-regular', sans-serif;
 
     font-size: 12px;
@@ -109,8 +109,8 @@ margin-top: 55px;
 }
 .register_btn {
     display: flex;
-    width: 164px;
-    height: 40.732px;
+    width: 144px;
+    height: 35.732px;
     padding: 10.719px;
     flex-direction: column;
     justify-content: center;
