@@ -27,9 +27,9 @@
 
 }
 .regbutdiv{
-    position: absolute;
+    position: relative;
     margin-left: 338px;
-    margin-top: 460px;
+    margin-top: -180px; 
     transform-origin: left center;
 
     font-family: 'myanmar-khyay-regular', sans-serif;
