@@ -1,4 +1,5 @@
 import openai
+import os
 from flask import Flask, render_template,  jsonify, request
 
 app = Flask(__name__)
@@ -20,9 +21,8 @@ def dash():
 @app.route('/convos')
 def convo():
     return render_template('convo.html',title='convo')
-
-API_KEY = "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"
-openai.api_key = API_KEY
+ 
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 @app.route("/api", methods=["POST"])
 def api():
