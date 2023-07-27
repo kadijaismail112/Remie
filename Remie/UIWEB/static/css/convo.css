@@ -11,6 +11,9 @@
     color: #153243 !important;
     background: var(--secondary_shade);
   }
+  #convoact:hover{
+    border:2px solid white;
+    }
   #convoact a{
     color: #153243 !important;
     background: var(--secondary_shade);
