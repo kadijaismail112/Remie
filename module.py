@@ -78,5 +78,6 @@ def agent(message):
 
     response = agent_chain.run(input=message)
     parser = SelfAskOutputParser()
-    answer = str(parser.parse(response.output))
+    answer = parser.parse(response.output)
+    print(answer)
     return answer
