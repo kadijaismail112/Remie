@@ -103,8 +103,17 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
+
+            session['isLogged'] = True
+            session['email'] = form.email.data
+
             return redirect(url_for('launch'))
+        
         flash('Incorrect Email or Password. Please try again!', 'error')
+
+    # If the form is not submitted or login is unsuccessful, set isLogged to False
+    session['isLogged'] = False
+
     return render_template('login.html', title='Login', form=form)
 
 
@@ -165,12 +174,18 @@ def api():
         if message_response == "1":
             chat_response = agent(text_message)
             print(chat_response)
+            convo = Convos(email=session['email'], request=text_message, response=chat_response)
+            convo_db.session.add(convo)
+            convo_db.session.commit()
             return jsonify(chat_response)
         elif message_response == "2":
             event_json = create_json(text_message)
             print(event_json)
             new_json = input_json('parse.json')
             print(new_json)
+            convo = Convos(email=session['email'], request=text_message, response=new_json)
+            convo_db.session.add(convo)
+            convo_db.session.commit()
             return jsonify("Event created successfully!")
             # cond = create_event(new_json)
             # print(cond)
