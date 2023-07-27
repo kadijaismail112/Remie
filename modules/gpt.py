@@ -12,14 +12,13 @@ classification = """You are a chatbot assistant that helps people with their dai
 the possible classes are:
 - A general question, that can be answered by the chatbot = 1
 - A request to create a calendar event, that should be sent to google = 2
-- A request to send an email, that should be sent to google = 3
-- A request to play a song, that should be sent to spotify = 4
+- A request to play a song, that should be sent to spotify = 3
 
 Please only give me a number corresponding to what you think the class is. 
 If you think the question is a general question that can be answered ovre the internet, then give me a 1. 
 If you think the question is a request to create a calendar event, then give me a 2. 
-If you think the question is a request to send an email, then give me a 3.
-If you think the question is a request to play a song, then give me a 4.
+If you think the question is a request to play a song, then give me a 3.
+
 
 
 Question: What is the weather like today?
@@ -28,14 +27,18 @@ Response: 1
 Question: Create a calendar event for tomorrow at 3pm
 Response: 2
 
-Question: Send an email to my boss about the meeting
-Response: 3
-
 Question: Play Work by Rihanna on Spotify
-Response: 4
+Response: 3
+"""
+
+song_name = """ You are a song name generator. I want for you to generate a song name given a sentence.
+Do not give me anything else other than a song name.
+User: Play Work by Rihanna on Spotify
+Response: Work by Rihanna
 """
 
 classifier = [{"role": "system", "content": classification}]
+song = [{"role": "system", "content": song_name}]
 chat_log = []
 
 def chatgpt_process_query(chat_log, message):

@@ -8,7 +8,7 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 
-from modules.gpt import chatgpt_process_query, classifier, agent
+from modules.gpt import chatgpt_process_query, classifier, song, agent
 from modules.pyd import create_json
 from modules.inout import input_json
 
@@ -181,15 +181,20 @@ def api():
             convo_db.session.add(convo)
             convo_db.session.commit()
             return jsonify("Event created successfully!")
+            # this just broke, please give us one moment as we fix it
             # cond = create_event(new_json)
             # print(cond)
             # if cond == 0:
             #     return jsonify("Event created successfully!")
             # else:
             #     return jsonify("I'm sorry, it didn't work. Please give me more information")        
-        else:
-            print("3")
-            return jsonify("I'm sorry, I don't understand. Please try again.")
+        # elif message_response == "3":
+        #     song = chatgpt_process_query(song, text_message)
+        #     cond = play_song(song)
+        #     if cond == 0:
+        #         return jsonify("Song played successfully!")
+        #     else:
+        #         return jsonify("I'm sorry, it didn't work. Please give me more information")
 
 
 
