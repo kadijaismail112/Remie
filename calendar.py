@@ -1,15 +1,16 @@
+import os.path
 import json
-from langchain.prompts import PromptTemplate
-from langchain.llms import OpenAI
 
-from langchain.output_parsers import PydanticOutputParser
-from pydantic import BaseModel, Field
-from typing import Optional
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
+from parser import create_json, Event
 
-model_name = "text-davinci-003"
-temperature = 0.0
-model = OpenAI(model_name=model_name, temperature=temperature)
+# If modifying these scopes, delete the file token.json.
+SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 # event = {
 #   'summary': 'Google I/O 2015',
@@ -39,74 +40,25 @@ model = OpenAI(model_name=model_name, temperature=temperature)
 #   },
 # }
 
-
-class DateTimeZone(BaseModel):
-    dateTime: Optional[str] = Field(description="The start time of the event, in datetime format", example="2021-10-10T09:00:00-07:00")
-    timeZone: Optional[str] = Field(description="The timezone of the event", example="America/Los_Angeles")
-
-class Attendee(BaseModel):
-    email: Optional[str] = Field(description="The email of the attendee", example="janedoe@gmail.com")
-    # @validator("email")
-    # def email_is_valid(cls, v):
-    #     if "@" not in v:
-    #         raise ValueError("Invalid email address")
-    #     return v
-
-class ReminderOverride(BaseModel):
-    method: Optional[str] = Field(description="The method of the reminder", example="email")
-    minutes: Optional[int] = Field(description="How many minutes before the event you want to be reminded", example=24 * 60)
-
-class Reminders(BaseModel):
-    useDefault: Optional[bool] = Field(description="Whether to use the default reminders", example=False)
-    overrides: Optional[list[ReminderOverride]] = Field(description="How often you want to be reminded of the event", example="[{'method': 'email', 'minutes': 24 * 60}, {'method': 'popup', 'minutes': 10}]")
-
-class Event(BaseModel):
-    summary: Optional[str] = Field(description="title of the event", example="Meeting with John")
-    location: Optional[str] = Field(description="where the event is, or the location of the event", example="800 Howard St., San Francisco, CA 94103")
-    description: Optional[str] = Field(description="What the event is about", example="Discussing the new project")
-    start: Optional[DateTimeZone] = Field(description="The start time of the event, in datetime format", example="{'dateTime': '2021-10-10T09:00:00-07:00', 'timeZone': 'America/Los_Angeles'}")
-    end: Optional[DateTimeZone] = Field(description="The end time of the event, in datetime format, if not specified set to an hour later than start time", example="2021-10-10T10:00:00-07:00")
-    recurrence: Optional[list[str]] = Field(description="How often is the meeting happening", example="FREQ=DAILY;COUNT=2")
-    attendees: Optional[list[Attendee]] = Field(description="Who is attending the event", example="[{'email': johndoe@gmail.com}, {'email': janedoe@gmail.com}]")
-    reminders: Optional[Reminders] = Field(description="How often you want to be reminded of the event", example="[{'method': 'email', 'minutes': 24 * 60}, {'method': 'popup', 'minutes': 10}]")
-
-
-def create_json(message, json_type):
-    # And a query intented to prompt a language model to populate the data structure.
-
-    # Set up a parser + inject instructions into the prompt template.
-    parser = PydanticOutputParser(pydantic_object=json_type)
-
-    prompt = PromptTemplate(
-        template="Answer the user query.\n{format_instructions}\n{query}\n",
-        input_variables=["query"],
-        partial_variables={"format_instructions": parser.get_format_instructions()},
-    )
-
-    _input = prompt.format_prompt(query=message)
-
-    output = model(_input.to_string())
-
-    parser.parse(output)
-
-    print(output)
-
-    return output
-
-def output_json(some_json):
-    # Opening JSON file
-    with open('parse.json', 'w') as outfile:
-        trimmed_string = some_json.strip('"\n ')
-
-        # Removing unwanted substrings
-        cleaned_string = trimmed_string.replace("\\n", "").replace("Here is the output:\n```", "").replace("```", "").replace("\\\"", "\"")
-
-        # Using json.loads to parse the string into JSON
-        clean_data = json.loads(cleaned_string)
-        # Reading from json file
-        json.dump(clean_data, outfile)
-
-
+event = {
+  "summary": "Calendar event for tomorrow",
+  "location": "",
+  "description": "",
+  "start": {
+    "dateTime": "2021-10-11T15:00:00-07:00",
+    "timeZone": "America/Los_Angeles"
+  },
+  "end": {
+    "dateTime": "2021-10-11T16:00:00-07:00",
+    "timeZone": "America/Los_Angeles"
+  },
+  "recurrence": [],
+  "attendees": [],
+  "reminders": {
+    "useDefault": True,
+    "overrides": []
+  }
+}
 
 def input_json():
     with open('parse.json', 'r') as openfile:
@@ -115,9 +67,40 @@ def input_json():
         json_object = json.load(openfile)
         return json_object
 
+def create_event(event_json):
+    """Shows basic usage of the Google Calendar API.
+    Prints the start and name of the next 10 events on the user's calendar.
+    """
+    creds = None
+    # The file token.json stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
 
+    try:
+        service = build('calendar', 'v3', credentials=creds)
+        event = service.events().insert(calendarId='primary', body=event_json).execute()
+        print('Event created: %s' % (event.get('htmlLink')))
+        return 1
 
-var = create_json("Tell imen to shut up tomorrow at 5pm", Event)
-output_json(var)
-# clean = chatgpt_process_query(json_generator, new_var)
-# print(clean)
+    except HttpError as error:
+        print('An error occurred: %s' % error)
+        return 0 
+item_json = input_json()
+create_event(event)
+
+# event_json = create_json("Create a calendar event for tomorrow at 3pm", Event)
+# print(event_json)
+    # create_event(event_json)
