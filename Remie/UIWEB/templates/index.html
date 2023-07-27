@@ -30,25 +30,6 @@
   </div>
 {% endblock %}
 {% block jsScripts %}
-<script>
-  let load = false
-  function openPopup() {
-    
-    const url = 'dashboard'; // Replace with the URL you want to open in the popup
-    const width = 800;
-    const height = 600;
-    const windowFeatures = 'width=' + width + ',height=' + height + ',resizable=no,scrollbars=no,status=no,toolbar=no';
-    window.open(url, '_blank', windowFeatures);
-    load = true
-}
-// Call the openPopup function when the page loads
-if(load == false){
-// Call the openPopup function when the page loads
-//window.onload = openPopup;
-}
-  // Call the function to open and resize the popup window on page load
- // window.onload = openAndResizePopup;
-</script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const button = document.getElementById('remieClick')

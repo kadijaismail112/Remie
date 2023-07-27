@@ -1,13 +1,20 @@
+{% extends 'basepopup.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>REMIE</title>
+  {% block headpop %} 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/variable.css') }}" />
+  {% endblock %}
 </head>
 <body>
+  {% block noNav %}
+  {% endblock %}
+  {% block contentpop %} 
   <div class="welc_container">
     <h1 class="fade-in">Launch REMIE!</h1>
     <p class="slide-left">Discover Amazing Things</p>
@@ -16,7 +23,10 @@
   </div>
   </div>
 </body>
+{% endblock %}
+{% block jsScripts %}
 <script>
+
   function openPopup() {
       // Specify the URL of your website
       const url = '{{ url_for('dashboard') }}'; // Replace '/index' with the actual URL of your website
@@ -33,5 +43,8 @@
         popupWindow.resizeTo(593, 711);
       });
     }
+
+
 </script>
+{% endblock %}
 </html>

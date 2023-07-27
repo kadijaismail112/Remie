@@ -114,7 +114,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return
+    return redirect(url_for('launch'))
 
 
 @app.route('/register', methods=["GET", "POST"])

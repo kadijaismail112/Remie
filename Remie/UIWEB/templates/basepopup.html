@@ -26,6 +26,7 @@
   </head>
   <body>
     <div class="row_pop">
+      {% block noNav %}
       <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar">
@@ -51,13 +52,21 @@
           </ul>
         </nav>
       </div>
+      {% endblock %}
       <div class="dashboard">{% block contentpop %} {% endblock %}</div>
     </div>
   </body>
   <script>
+    let loggedOut  = false
     function close_window() {
-      window.close();
+     window.close();
+      window.opener.history.pushState({}, "Lanch", "{{ url_for('login') }}");
+      window.opener.location.reload();
+
+      //window.location.href = '/login';
+
     }
+ 
   </script>
   {% block jsScripts %} {% endblock %}
   <script
