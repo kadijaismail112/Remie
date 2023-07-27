@@ -21,7 +21,23 @@
     background: #153243;
     box-shadow: 0px 6.134999752044678px 6.134999752044678px 0px rgba(0, 0, 0, 0.25);
 }
+.log_col{
+    display: flex;
+    flex-direction: column;
 
+}
+.regbutdiv{
+    position: absolute;
+    margin-left: 335px;
+    margin-top: 460px;
+    transform-origin: left center;
+    transform: scale(0.9);
+    font-family: 'myanmar-khyay-regular', sans-serif;
+
+    font-size: 12px;
+font-style: normal;
+font-weight: 500;
+}
 .log_img_one {
     width: 208px;
     height: 208px;

@@ -5,6 +5,7 @@
 {% block content %}
   <div class="reg_container">
     <img src="{{url_for('static',filename='images/arm.png')}}" alt="arm" class="reg_img_one">
+    <div class="reg_col">
     <form class="reg_box" method="POST" action="">
       {{ form.hidden_tag() }}
         <p class="reg_top">Register</p>
@@ -13,9 +14,11 @@
         {{ form.password( id='inputs',class="reg_input", type = "password", placeholder="Enter Password" )}} 
         {{ form.confirmPassword( id='inputs',class="reg_input", type = "password", placeholder="Confirm Password")}} 
         {{ form.submit(id='inputs', class="register_btn", onclick="goToLogin()") }}
-        <button id='inputs' class="login_btn" onclick="goToLogin()">login</button>
-
     </form>
+    <div class="logbutdiv">
+    <button id='inputs' class="login_btn" onclick="goToLogin()">login</button>
+    </div>
+  </div>
     <img src="{{url_for('static',filename='images/search.png')}}" alt="search" class="reg_img_two">
   </div>
 {% endblock %}

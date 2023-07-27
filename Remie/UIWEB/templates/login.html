@@ -1,31 +1,20 @@
-{% extends 'base.html' %} 
-{% block head%}
-<link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}" />
-{% endblock %} 
+{% extends 'base.html' %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/login.css') }}" />
+{% endblock %}
 {% block content %}
-<div class="log_container">
-  <img
-    src="{{url_for('static',filename='images/arm.png')}}"
-    alt="arm"
-    class="log_img_one"
-  />
-  <form class="login_box" method="POST" action="">
-    {{ form.hidden_tag() }}
+  <div class="log_container">
+    <img src="{{ url_for('static', filename = 'images/arm.png') }}" alt="arm" class="log_img_one" />
+    <div class="log_col">
+    <form class="login_box" method="POST" action="">
+      {{ form.hidden_tag() }}
 
-    <p class="log_top">Login</p>
-    {{ form.email(class="log_input", placeholder="Enter Email")}} {{
-    form.password(class="log_input", placeholder="Enter Password" )}} {{
-    form.submit(class="login_btn") }}
-    <a href="{{ url_for('register') }}"
-    ><button class="register_btn" onclick="goToRegister()">Register</button></a
-  >
+      <p class="log_top">Login</p>
+      {{ form.email(class = 'log_input', placeholder = 'Enter Email') }} {{ form.password(class = 'log_input', placeholder = 'Enter Password') }} {{ form.submit(class = 'login_btn') }}
   </form>
-  
+  <a class="regbutdiv" href="{{ url_for('register') }}"><button class="register_btn" onclick="goToRegister()">Register</button></a>
 
-  <img
-    src="{{url_for('static',filename='images/search.png')}}"
-    alt="search"
-    class="log_img_two"
-  />
 </div>
+    <img src="{{ url_for('static', filename = 'images/search.png') }}" alt="search" class="log_img_two" />
+  </div>
 {% endblock %}
