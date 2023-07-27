@@ -17,6 +17,6 @@ Once everything is set, in the terminal cd into Remie then run the command:
 Please create your own API Keys for `OPENAI_API_KEY`, `GOOGLE_CSE_KEY`, and `GOOGLE_API_KEY`.
 
 To use the calendar, you need to configure
-the `GOOGLE_CALENDAR_ID` and `GOOGLE_CALENDAR_API_KEY` environment variables.
+the `GOOGLE_CALENDAR_ID` and `GOOGLE_CALENDAR_API_KEY` environment variables. We are working on a way to deploy this so that you just have to authenticate with your Google account.
 
 The APIs used in Remie are stored in **ENVIRONMENT** Variables!
