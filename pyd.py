@@ -1,4 +1,3 @@
-import json
 from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
 
@@ -6,8 +5,7 @@ from langchain.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 from typing import Optional
 
-
-
+from inout import output_json
 
 model_name = "text-davinci-003"
 temperature = 0.0
@@ -73,7 +71,7 @@ class Event(BaseModel):
     reminders: Optional[Reminders] = Field(description="How often you want to be reminded of the event", example="[{'method': 'email', 'minutes': 24 * 60}, {'method': 'popup', 'minutes': 10}]")
 
 
-def create_json(message, json_type):
+def create_json(message, json_type=Event):
     # And a query intented to prompt a language model to populate the data structure.
 
     # Set up a parser + inject instructions into the prompt template.
@@ -90,36 +88,7 @@ def create_json(message, json_type):
     output = model(_input.to_string())
 
     parser.parse(output)
-
-    print(output)
+    
+    output_json('parse.json', output)
 
     return output
-
-def output_json(some_json):
-    # Opening JSON file
-    with open('parse.json', 'w') as outfile:
-        trimmed_string = some_json.strip('"\n ')
-
-        # Removing unwanted substrings
-        cleaned_string = trimmed_string.replace("\\n", "").replace("Here is the output:\n```", "").replace("```", "").replace("\\\"", "\"")
-
-        # Using json.loads to parse the string into JSON
-        clean_data = json.loads(cleaned_string)
-        # Reading from json file
-        json.dump(clean_data, outfile)
-
-
-
-def input_json():
-    with open('parse.json', 'r') as openfile:
- 
-    # Reading from json file
-        json_object = json.load(openfile)
-        return json_object
-
-
-
-var = create_json("Tell imen to shut up tomorrow at 5pm", Event)
-output_json(var)
-# clean = chatgpt_process_query(json_generator, new_var)
-# print(clean)

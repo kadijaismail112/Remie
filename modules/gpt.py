@@ -1,5 +1,4 @@
 import openai
-# import marvin
 import os
 from langchain.agents import Tool
 from langchain.memory import ConversationBufferMemory
@@ -9,8 +8,6 @@ from langchain.agents import initialize_agent
 from langchain.agents.self_ask_with_search.output_parser import SelfAskOutputParser
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
-# os.environ["GOOGLE_CSE_ID"] = ""
-# os.environ["GOOGLE_API_KEY"] = ""
 
 classification = """You are a chatbot assistant that helps people with their daily tasks. I want for you to classify questions given what you think they are.
 the possible classes are:
@@ -42,22 +39,6 @@ Response: 4
 classifier = [{"role": "system", "content": classification}]
 chat_log = []
 
-# def chatgpt_process_query(chat_log, message): 
-    
-#     print(f"User:, {message}")
-#     chat_log.append({"role": "user", "content": message})
-#     response = openai.ChatCompletion.create(
-#         model="gpt-3.5-turbo",
-#         messages=chat_log
-#     )
-#     assistant_response = response['choices'][0]['message']['content']
-
-#     clean_assistant_response = assistant_response.strip("\n").strip()
-#     print("ChatGPT:", clean_assistant_response)
-#     chat_log.append({"role": "assistant", "content": clean_assistant_response})
-
-#     return clean_assistant_response
-
 def chatgpt_process_query(chat_log, message):
     chat_log.append({"role": "user", "content": message})
     response = openai.ChatCompletion.create(
@@ -86,9 +67,7 @@ def agent(message):
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
     llm=ChatOpenAI(temperature=0)
-    agent_chain = initialize_agent(tools, llm, agent="chat-conversational-react-description",verbose=True, memory=memory)
+    agent_chain = initialize_agent(tools, llm, agent="chat-conversational-react-description",verbose=False, memory=memory)
 
     response = agent_chain.run(input=message)
-    parser = SelfAskOutputParser()
-    answer = str(parser.parse(response.output))
-    return answer
+    return response
