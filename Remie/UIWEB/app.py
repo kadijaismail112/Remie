@@ -99,18 +99,8 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-
-            # Set isLogged to True in the session after successful login
-            session['isLogged'] = True
-            session['email'] = form.email.data
-
             return redirect(url_for('launch'))
-
         flash('Incorrect Email or Password. Please try again!', 'error')
-
-    # If the form is not submitted or login is unsuccessful, set isLogged to False
-    session['isLogged'] = False
-
     return render_template('login.html', title='Login', form=form)
 
 

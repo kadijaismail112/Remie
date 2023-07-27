@@ -7,6 +7,14 @@
     height:700px;
     /* border: solid 5px #000; */
 }
+#convoact{
+    color: #153243 !important;
+    background: var(--secondary_shade);
+  }
+  #convoact a{
+    color: #153243 !important;
+    background: var(--secondary_shade);
+  }
 .convo_card{
     width: 420px;
     height: max-content;

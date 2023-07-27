@@ -5,7 +5,14 @@
     column-gap: 132px;
 
 }
-
+#dashact{
+  color: #153243 !important;
+  background: var(--secondary_shade);
+}
+#dashact a{
+  color: #153243 !important;
+  background: var(--secondary_shade);
+}
 .dash_col_one {
     display: flex;
     flex-direction: column;
@@ -54,7 +61,7 @@
     margin-top: 35px;
     animation-name: none;
     animation-duration: 1s;
-    animation-delay: 2s;
+    animation-delay: 0s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
     animation-direction: alternate;
