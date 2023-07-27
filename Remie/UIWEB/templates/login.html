@@ -6,7 +6,7 @@
   <div class="log_container">
     <img src="{{ url_for('static', filename = 'images/arm.png') }}" alt="arm" class="log_img_one" />
     <div class="log_col">
-    <form class="login_box" method="POST" action="">
+    <form id='myForm' class="login_box" method="POST" action="">
       {{ form.hidden_tag() }}
 
       <p class="log_top">Login</p>
@@ -17,4 +17,16 @@
 </div>
     <img src="{{ url_for('static', filename = 'images/search.png') }}" alt="search" class="log_img_two" />
   </div>
+{% endblock %}
+{% block jsScripts %}
+<script>
+     // Check if the form submission was successful
+     document.getElementById('myForm').addEventListener('submit', function(event) {
+      // Check if the form is valid
+      if (!event.target.checkValidity()) {
+        event.preventDefault(); // Prevent form submission
+        alert('Form submission failed. Please check your inputs.');
+      }
+    });
+</script>
 {% endblock %}
