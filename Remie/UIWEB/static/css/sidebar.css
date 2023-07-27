@@ -96,7 +96,6 @@ width:260px;
 #sidebar ul li a:hover {
     color: var(--secondary_shade) !important;
     background: var(--blue_two);
-    ;
 }
 
 #sidebar ul li.active>a,
