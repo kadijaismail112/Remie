@@ -109,6 +109,14 @@ def login():
     session['isLogged'] = False
 
     return render_template('login.html', title='Login', form=form)
+
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return
+
+
 @app.route('/register', methods=["GET", "POST"])
 def register():
     form = RegisterForm()
@@ -141,7 +149,7 @@ def convo():
     return render_template('convo.html', title='convo')
 
 
-API_KEY = os.environ['OPENAI_API_KEY']
+API_KEY = os.environ.get('OPENAI_API_KEY')
 openai.api_key = API_KEY
 
 
