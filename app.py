@@ -1,6 +1,7 @@
 import openai
 import os
 from flask import Flask, render_template,  jsonify, request
+from module import chatgpt_process_query, chat_log, classifier
 
 app = Flask(__name__)
 
@@ -26,30 +27,17 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 
 @app.route("/api", methods=["POST"])
 def api():
-    # print("backend grab form", request.form)
-    # print("backend grab form per: ", request.form.get('username'), request.form.get('password'))
-
+    # Get the message from the request
     text_message = request.form.get('text_message')
-    print("response:" + text_message)
-    response_message=chatgpt_process_query(text_message)
+    message_response = chatgpt_process_query(classifier, text_message)
+    
+    # classify the message
+    if message_response == "1":
+        chat_response = chatgpt_process_query(chat_log, text_message)
+        return jsonify(chat_response)
+    else:
+        print("Not working yet")
+        return jsonify("Not working yet")
 
-    return jsonify(response_message)
-
-
-chat_log = []
-
-def chatgpt_process_query(message):
-    chat_log.append({"role": "user", "content": message})
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=chat_log
-    )
-    assistant_response = response['choices'] [0] ['message'] ['content']
-
-    clean_assistant_response=assistant_response.strip("\n").strip()
-    print("ChatGPT:", clean_assistant_response)
-    chat_log.append({"role": "assistant", "content": clean_assistant_response})
-
-    return clean_assistant_response 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8000)
+    app.run(debug=True, host="0.0.0.0", port=8000)
