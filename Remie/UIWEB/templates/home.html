@@ -8,9 +8,20 @@
   <link rel="stylesheet" href="{{ url_for('static', filename = 'css/home.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename = 'css/variable.css') }}" /></head>
 <body>
+
   <div class="welc_container">
     <h1 class="fade-in">Welcome to REMIE!</h1>
-    <p class="slide-left">Discover Amazing Things</p>
+
+    <div class="flip_container">
+        <p>REMIE will</p>
+        <section class="animation">
+          <div class="first"><div>Assist
+            </div></div>
+          <div class="second"><div>Complete Tasks</div></div>
+          <div class="third"><div>Listen</div></div>
+        </section>
+      </div>
+
     <a class='bounce' href="{{ url_for('login') }}">
         <button class="welcome_btn">Get Started</button>
     </a>

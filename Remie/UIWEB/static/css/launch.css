@@ -78,9 +78,5 @@ body {
     }
   }
   
-  @keyframes backgroundAnimation {
-    to {
-      background-position: right bottom;
-    }
-  }
+
   
