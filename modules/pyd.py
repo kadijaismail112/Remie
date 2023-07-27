@@ -5,7 +5,7 @@ from langchain.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 from typing import Optional
 
-from inout import output_json
+from modules.inout import output_json
 
 model_name = "text-davinci-003"
 temperature = 0.0

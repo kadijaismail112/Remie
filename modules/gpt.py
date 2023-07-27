@@ -48,7 +48,6 @@ def chatgpt_process_query(chat_log, message):
     assistant_response = response['choices'][0]['message']['content']
 
     clean_assistant_response=assistant_response.strip("\n").strip()
-    print("ChatGPT:", clean_assistant_response)
     chat_log.append({"role": "assistant", "content": clean_assistant_response})
     return clean_assistant_response
 

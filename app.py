@@ -2,9 +2,9 @@ import openai
 import os
 from flask import Flask, render_template,  jsonify, request
 from modules.gpt import chatgpt_process_query, chat_log, classifier, agent
-from pyd import create_json
+from modules.pyd import create_json
 # from calendar import create_event
-from inout import input_json, output_json
+from modules.inout import input_json
 
 app = Flask(__name__)
 
@@ -40,17 +40,17 @@ def api():
     else:
         # classify the message
         if message_response == "1":
-            print("1")
-            chat_response = chatgpt_process_query(chat_log, text_message)
+            chat_response = agent(text_message)
+            print(chat_response)
             return jsonify(chat_response)
         elif message_response == "2":
-            print("2")
             event_json = create_json(text_message)
             print(event_json)
             new_json = input_json('parse.json')
             print(new_json)
             return jsonify("Event created successfully!")
             # cond = create_event(new_json)
+            # print(cond)
             # if cond == 0:
             #     return jsonify("Event created successfully!")
             # else:
