@@ -69,3 +69,5 @@ def agent(message):
 
     response = agent_chain.run(input=message)
     return response
+
+# print(agent("What is the high temperature today in New York City?"))

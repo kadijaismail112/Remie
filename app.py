@@ -103,8 +103,11 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
+            session['isLogged'] = True
+            session['email'] = form.email.data
             return redirect(url_for('launch'))
         flash('Incorrect Email or Password. Please try again!', 'error')
+    session['isLogged'] = False
     return render_template('login.html', title='Login', form=form)
 
 
@@ -165,12 +168,18 @@ def api():
         if message_response == "1":
             chat_response = agent(text_message)
             print(chat_response)
+            convo = Convos(email=session['email'], request=text_message, response=chat_response)
+            convo_db.session.add(convo)
+            convo_db.session.commit()
             return jsonify(chat_response)
         elif message_response == "2":
             event_json = create_json(text_message)
             print(event_json)
             new_json = input_json('parse.json')
             print(new_json)
+            convo = Convos(email=session['email'], request=text_message, response="Event created successfully!")
+            convo_db.session.add(convo)
+            convo_db.session.commit()
             return jsonify("Event created successfully!")
             # cond = create_event(new_json)
             # print(cond)
@@ -182,44 +191,6 @@ def api():
             print("3")
             return jsonify("I'm sorry, I don't understand. Please try again.")
 
-
-# chat_log = []
-
-# class Convos(convo_db.Model):
-#     id = convo_db.Column(convo_db.Integer, primary_key=True)
-#     request = convo_db.Column(convo_db.String(65000), nullable=False)
-#     response = convo_db.Column(convo_db.String(320), nullable=False)
-
-
-# def chatgpt_process_query(message):
-#     chat_history = []
-#     chat_log.append({"role": "user", "content": message})
-    
-#     convo_query = Convos.query.filter(Convos.email == session['email']).all()
-#     for convo in convo_query:
-#         convo_dict = convo.__dict__
-#         chat_history.append({"role": "user", "content": convo_dict['request']})
-#         chat_history.append(
-#             {"role": "assistant", "content": convo_dict['response']})
-    
-#     chat_history.append({"role": "user", "content": message})
-
-#     response = openai.ChatCompletion.create(
-#         model="gpt-3.5-turbo",
-#         messages=chat_history
-#     )
-#     assistant_response = response['choices'][0]['message']['content']
-
-#     clean_assistant_response = assistant_response.strip("\n").strip()
-#     print("ChatGPT:", clean_assistant_response)
-#     chat_log.append({"role": "assistant", "content": clean_assistant_response})
-
-#     convo = Convos(email=session['email'], request=message,
-#                    response=clean_assistant_response)
-#     convo_db.session.add(convo)
-#     convo_db.session.commit()
-
-#     return clean_assistant_response
 
 
 if __name__ == '__main__':
