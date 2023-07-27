@@ -1,19 +1,24 @@
-{% extends 'basepopup.html' %}
-{% block headpop%}
-<link rel="stylesheet" href="{{url_for('static',filename='css/convo.css')}}"/>
-{% endblock %}
-{% block contentpop %}  
-    <div class="convo_contain">
-        <p class="convo_text">Conversations:</p>
-        <div class="convo_card">
-            <div class="you_ask">
-                <p class="y_text">YOU:</p>
-                <p class="y_text_output">TBA</p>
-            </div>
-            <div class="response_remie">
-                <p class="r_text">REMIE:</p>
-                <p class="r_text_output">TBA</p>
-            </div>
-        </div>
+{% extends 'basepopup.html' %} {% block headpop%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/convo.css')}}" />
+{% endblock %} {% block contentpop %}
+<div class="convo_contain">
+  <p class="convo_text">Conversations:</p>
+  {% for convo in convo_query %}
+  <div class="convo_card">
+    <div class="you_ask">
+      <p class="y_text">YOU:</p>
+      <p class="y_text_output">{{ convo.request }}</p>
     </div>
+    <div class="response_remie">
+      <p class="r_text">REMIE:</p>
+      <p class="r_text_output">{{ convo.response }}</p>
+    </div>
+  </div>
+  <!-- <tr>
+      <td>
+        <a href="/delete-song/{{ convo.id }}">X</a>
+      </td>
+    </tr> -->
+  {% endfor %}
+</div>
 {% endblock %}

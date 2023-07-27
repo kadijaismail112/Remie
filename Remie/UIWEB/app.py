@@ -1,6 +1,6 @@
 import os
 import openai
-from flask import Flask, render_template, jsonify, request, redirect, url_for,session,flash
+from flask import Flask, render_template, jsonify, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -13,6 +13,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
@@ -62,32 +64,32 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
+convo_db = SQLAlchemy(app)
+class Convos(convo_db.Model):
+    id = convo_db.Column(convo_db.Integer, primary_key=True)
+    email = convo_db.Column(convo_db.String(320), nullable=False)
+    request = convo_db.Column(convo_db.String(65000), nullable=False)
+    response = convo_db.Column(convo_db.String(65000), nullable=False)
+
+
 with app.app_context():
     db.create_all()
+    convo_db.create_all()
 
 # routes
+
+
 @app.route('/')
 @app.route('/home')
 def home():
     return render_template('home.html', title='Home')
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     form = LoginForm()
 
-#     if form.validate_on_submit():
-#         user = User.query.filter_by(email=form.email.data).first()
-#         if user and bcrypt.check_password_hash(user.password, form.password.data):
-#             login_user(user)
-#             session['isLogged'] = True
-#             return redirect(url_for('home'))
 
-#     # If the form is not submitted or login is unsuccessful, set isLogged to False
-#     session['isLogged'] = False
-#     return render_template('login.html', title='Login', form=form)
 @app.route('/Launch')
 @login_required
 def launch():
     return render_template('launchRemie.html', title='Home')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -100,6 +102,7 @@ def login():
 
             # Set isLogged to True in the session after successful login
             session['isLogged'] = True
+            session['email'] = form.email.data
 
             return redirect(url_for('launch'))
 
@@ -109,6 +112,7 @@ def login():
     session['isLogged'] = False
 
     return render_template('login.html', title='Login', form=form)
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
@@ -146,10 +150,11 @@ def dashboard():
 @app.route('/convos')
 @login_required
 def convo():
-    return render_template('convo.html', title='convo')
+    convo_query = Convos.query.filter(Convos.email == session['email']).all()
+    return render_template('convo.html', title='convo', convo_query=convo_query)
 
 
-API_KEY = os.environ['OPENAI_API_KEY']
+API_KEY = os.environ.get('OPENAI_API_KEY')
 openai.api_key = API_KEY
 
 
@@ -167,18 +172,39 @@ def api():
 
 chat_log = []
 
+# class Convos(convo_db.Model):
+#     id = convo_db.Column(convo_db.Integer, primary_key=True)
+#     request = convo_db.Column(convo_db.String(65000), nullable=False)
+#     response = convo_db.Column(convo_db.String(320), nullable=False)
+
 
 def chatgpt_process_query(message):
+    chat_history = []
     chat_log.append({"role": "user", "content": message})
+    
+    convo_query = Convos.query.filter(Convos.email == session['email']).all()
+    for convo in convo_query:
+        convo_dict = convo.__dict__
+        chat_history.append({"role": "user", "content": convo_dict['request']})
+        chat_history.append(
+            {"role": "assistant", "content": convo_dict['response']})
+    
+    chat_history.append({"role": "user", "content": message})
+
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=chat_log
+        messages=chat_history
     )
     assistant_response = response['choices'][0]['message']['content']
 
     clean_assistant_response = assistant_response.strip("\n").strip()
     print("ChatGPT:", clean_assistant_response)
     chat_log.append({"role": "assistant", "content": clean_assistant_response})
+
+    convo = Convos(email=session['email'], request=message,
+                   response=clean_assistant_response)
+    convo_db.session.add(convo)
+    convo_db.session.commit()
 
     return clean_assistant_response
 
