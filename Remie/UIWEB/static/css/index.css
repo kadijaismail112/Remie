@@ -9,6 +9,9 @@
   color: #153243 !important;
   background: var(--secondary_shade);
 }
+#dashact:hover{
+border:2px solid white;
+}
 #dashact a{
   color: #153243 !important;
   background: var(--secondary_shade);
